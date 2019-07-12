@@ -44,6 +44,11 @@ console.log(john.speak());
 //   * `demo` receives a `subject` string as an argument and logs out the phrase 'Today we are learning about {subject}' where subject is the param passed in.
 //   * `grade` receives a `student` object and a `subject` string as arguments and logs out '{student.name} receives a perfect score on {subject}'
 
+// * Now that our students have a grade build out a method on the Instructor 
+// (this will be used by _BOTH_ instructors and PM's) 
+// that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+
+
 class Instructor extends Person {
     constructor(instAttrs) {
         super(instAttrs);
@@ -57,6 +62,11 @@ class Instructor extends Person {
     grade(student, subject) {
         return `${student.name} receives a perfect score on ${subject}.`
     }
+    gradeAssignment(student) {
+        let random = Math.round(Math.random()) * 2 - 1;
+        student.grade = student.grade + random;
+    }
+
 }
 
 const mike = new Instructor({
@@ -71,7 +81,7 @@ console.log(mike.demo('React'));
 
 
 const amy = new Instructor({
-    name: 'Amber',
+    name: 'Amy',
     age: 23,
     location: 'Los Angeles',
     specialty: 'Data Structures',
@@ -100,6 +110,7 @@ class Student extends Person {
         this.previousBackground = studentAttrs.previousBackground;
         this.className = studentAttrs.className;
         this.favSubjects = studentAttrs.favSubjects;
+        this.grade = studentAttrs.grade;
     }
     listsSubjects() {
         return this.favSubjects.join(', ');
@@ -110,6 +121,13 @@ class Student extends Person {
     sprintChallenge(subject) {
         return `${this.name} has begun sprint challenge on ${subject}`
     }
+    graduate() {
+        if (this.grade / 100 >= .7) {
+            return `${this.name} can graduate!`
+        } else {
+            return `${this.name} needs to work on their assignments!`
+        }
+    }
 }
 
 const aaron = new Student({
@@ -118,7 +136,8 @@ const aaron = new Student({
     location: 'New Hampshire',
     previousBackground: 'CNC Operator',
     className: 'WebPT8',
-    favSubjects: ['JavaScript', 'CSS', 'React']
+    favSubjects: ['JavaScript', 'CSS', 'React'],
+    grade: 70,
 });
 console.log(aaron.listsSubjects());
 
@@ -129,7 +148,8 @@ const kelly = new Student({
     location: 'Boston',
     previousBackground: 'Carpenter',
     className: 'Web12',
-    favSubjects: ['JavaScript', 'CSS', 'React', 'Java', 'C++']
+    favSubjects: ['JavaScript', 'CSS', 'React', 'Java', 'C++'],
+    grade: 100
 });
 console.log(kelly.PRAssignment('React-II'));
 console.log(mike.grade(kelly, 'react'));
@@ -140,7 +160,8 @@ const amanda = new Student({
     location: 'Portlan',
     previousBackground: 'Free Lance Dev',
     className: 'Web12',
-    favSubjects: ['React', 'Wordpress', '.NET', 'Algorithms']
+    favSubjects: ['React', 'Wordpress', '.NET', 'Algorithms'],
+    grade: 95,
 });
 console.log(amanda.sprintChallenge('Backend-I'));
 
@@ -192,12 +213,30 @@ const julie = new ProjectManagers({
     gradClassName: 'Web3',
     favInstructor: 'Larry'
 });
-console.log(julie.debugsCode(aaron, 'React'))
+console.log(julie.debugsCode(aaron, 'React'));
+console.log(julie.gradeAssignment(aaron));
+console.log(aaron.grade);
+console.log(aaron.graduate());
+
 
 // #### Stretch Problem
 
 // * Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
 // * Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
 // * Add a graduate method to a student.
-//   * This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
-//   * If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+//   * This method, when called, will check the grade of the student and 
+//see if they're ready to graduate from Lambda School
+//   * If the student's grade is above a 70% let them graduate! 
+//Otherwise go back to grading their assignments to increase their score.
+
+
+
+
+
+
+
+
+
+
+
+
